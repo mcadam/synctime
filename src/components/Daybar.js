@@ -23,7 +23,6 @@ class Daybar extends React.Component {
 
   render() {
     let overlapHours = [];
-    console.log(this.state.base);
 
     const hours = Array(24).fill(null).map((value, index) => {
       const baseHour = moment(this.state.date).tz(this.state.base).hour(index);
