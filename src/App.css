@@ -1,0 +1,38 @@
+.rounded-left {
+  border-top-right-radius: 0rem;
+  border-bottom-right-radius: 0rem;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.rounded-right {
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-top-left-radius: 0rem;
+  border-bottom-left-radius: 0rem;
+}
+.card {
+  max-width: 38px;
+  width: 38px;
+}
+@media (min-width: 576px) {
+  .card {
+    min-width: 45px;
+  }
+}
+.opacity-50 {
+  opacity: 0.5;
+}
+.opacity-75 {
+  opacity: 0.75;
+}
+.opacity-100 {
+  opacity: 1;
+}
+.shadow-important {
+  box-shadow: 0 0 0 0.2rem #23272b;
+  border-radius: 0.25rem !important;
+  z-index: 1;
+}
+.badge {
+  vertical-align: text-bottom;
+}
