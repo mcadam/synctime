@@ -19,6 +19,9 @@
     min-width: 45px;
   }
 }
+.cursor-pointer {
+  cursor: pointer;
+}
 .opacity-50 {
   opacity: 0.5;
 }

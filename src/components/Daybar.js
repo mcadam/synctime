@@ -1,6 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Card, CardGroup, Badge } from 'reactstrap';
 import { getColorForHour, isOverlapping, isCurrent, getOffset } from '../utils';
 
@@ -37,7 +38,7 @@ class Daybar extends React.Component {
         classes = `${classes} shadow-important`;
       }
       if (overlap) {
-        overlapHours.push(tzHour.format('ha'));
+        overlapHours.push(baseHour.format('ha'));
         classes = `${classes} opacity-100`;
       } else {
         classes = `${classes} opacity-50`;
@@ -71,20 +72,31 @@ class Daybar extends React.Component {
       );
     });
 
-    let overlapHoursText = <Badge color="warning" pill>No overlap</Badge>;
+    let overlapHoursText = `No availability ${this.state.base}`;
     if (overlapHours.length === 1) {
-      overlapHoursText = <Badge color="secondary" pill>Overlap {`${overlapHours[0]}`}</Badge>;
+      overlapHoursText = `Available ${this.state.base} ${overlapHours[0]}`;
     } else if (overlapHours.length > 1) {
-      overlapHoursText = <Badge color="secondary" pill>Overlap {`${overlapHours[0]}-${overlapHours.pop()}`}</Badge>;
+      overlapHoursText = `Available ${this.state.base} ${overlapHours[0]} - ${overlapHours.pop()}`;
     }
 
     const offset = <Badge color="secondary" pill>{getOffset(this.props.tz, this.state.base)}</Badge>;
 
-    const currentHour = <Badge color="secondary" className="ml-1" pill><Moment tz={this.props.tz} format="hh:mm a"/></Badge>;
+    const statusColor = getColorForHour(moment.tz(this.props.tz));
 
     return (
       <div>
-        <strong>{this.props.city}</strong><span className="d-none d-md-inline-block">, {this.props.country}</span> <span className="opacity-50">{currentHour} {offset} {overlapHoursText}</span>
+        <div className="d-flex flex-row align-items-center">
+          <FontAwesomeIcon icon={this.props.icon} size="xs" className={`mr-2 text-${statusColor}`} />
+          <h5 className="m-0">
+            <Moment tz={this.props.tz} format="hh:mm"/>
+            <small>
+              <Moment tz={this.props.tz} format="A" className="ml-1 small"/>
+            </small>
+          </h5>
+        </div>
+        <div className="d-flex flex-row align-items-center">
+          <strong>{this.props.city}</strong>, {this.props.country}, {overlapHoursText}
+        </div>
         <CardGroup className="flex-row flex-nowrap my-3 text-center">
           {hours}
         </CardGroup>

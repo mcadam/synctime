@@ -1,4 +1,6 @@
 import moment from 'moment';
+import cities from './cities.json';
+import ry from './data.json';
 
 const workingHours = {
   before: 6,
@@ -7,6 +9,48 @@ const workingHours = {
   after: 21
 };
 
+const initParams = {
+  date: moment(),
+  home: null,
+  itinerary: null,
+  filterItinerary: false
+};
+
+const searchCity = query => {
+  const results = cities.filter(c => c.name.includes(query));
+  return results;
+};
+
+const getCityFromIp = async () => {
+  try {
+    const response = await (await fetch('https://geoip.nekudo.com/api/')).json()
+    return {
+      id: null,
+      country: response.country.name,
+      name: response.city,
+      tz: response.location.time_zone
+    };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const getParams = async () => {
+  const city = await getCityFromIp();
+  if (city) {
+    initParams.home = city;
+  }
+  return initParams;
+};
+
+export const getRYItineraries = () => {
+  return Object.keys(ry);
+}
+
+export const getRYItinerary = (name) => {
+  return ry[name];
+}
 
 export const getColorForHour = hour => {
   const isWorkingHours = hour.isBetween(hour.clone().hour(workingHours.start), hour.clone().hour(workingHours.end), 'hour', '[]');

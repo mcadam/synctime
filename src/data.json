@@ -1,93 +1,88 @@
 {
-  "programs": [
+  "Curie": [
     {
-      "name": "Curie",
-      "cities": [
-        {
-          "name": "Lisbon",
-          "country": "Portugal",
-          "start": 1538352000,
-          "end": 1541030399,
-          "tz": "Europe/Lisbon"
-        },
-        {
-          "name": "Split",
-          "country": "Croatia",
-          "start": 1541030400,
-          "end": 1543622399,
-          "tz": "Europe/Zagreb"
-        },
-        {
-          "name": "Prague",
-          "country": "Czech Republic",
-          "start": 1543622400,
-          "end": 1546300799,
-          "tz": "Europe/Prague"
-        },
-        {
-          "name": "Marrakesh",
-          "country": "Morocco",
-          "start": 1546300800,
-          "end": 1548979199,
-          "tz": "Africa/Casablanca"
-        },
-        {
-          "name": "Hanoi",
-          "country": "Vietnam",
-          "start": 1548979200,
-          "end": 1551398399,
-          "tz": "Asia/Ho_Chi_Minh"
-        },
-        {
-          "name": "Chiang Mai",
-          "country": "Thailand",
-          "start": 1551398400,
-          "end": 1554076799,
-          "tz": "Asia/Bangkok"
-        },
-        {
-          "name": "Kyoto",
-          "country": "Japan",
-          "start": 1554076800,
-          "end": 1556668799,
-          "tz": "Asia/Tokyo"
-        },
-        {
-          "name": "Kuala Lumpur",
-          "country": "Malaysia",
-          "start": 1556668800,
-          "end": 1559347199,
-          "tz": "Asia/Kuala_Lumpur"
-        },
-        {
-          "name": "Santiago",
-          "country": "Chile",
-          "start": 1559347200,
-          "end": 1561939199,
-          "tz": "America/Santiago"
-        },
-        {
-          "name": "Lima",
-          "country": "Peru",
-          "start": 1561939200,
-          "end": 1564617599,
-          "tz": "America/Lima"
-        },
-        {
-          "name": "Medellin",
-          "country": "Colombia",
-          "start": 1564617600,
-          "end": 1567295999,
-          "tz": "America/Bogota"
-        },
-        {
-          "name": "Mexico City",
-          "country": "Mexico",
-          "start": 1567296000,
-          "end": 1569887999,
-          "tz": "America/Mexico_City"
-        }
-      ]
+      "name": "Lisbon",
+      "country": "Portugal",
+      "start": 1538352000,
+      "end": 1541030399,
+      "tz": "Europe/Lisbon"
+    },
+    {
+      "name": "Split",
+      "country": "Croatia",
+      "start": 1541030400,
+      "end": 1543622399,
+      "tz": "Europe/Zagreb"
+    },
+    {
+      "name": "Prague",
+      "country": "Czech Republic",
+      "start": 1543622400,
+      "end": 1546300799,
+      "tz": "Europe/Prague"
+    },
+    {
+      "name": "Marrakesh",
+      "country": "Morocco",
+      "start": 1546300800,
+      "end": 1548979199,
+      "tz": "Africa/Casablanca"
+    },
+    {
+      "name": "Hanoi",
+      "country": "Vietnam",
+      "start": 1548979200,
+      "end": 1551398399,
+      "tz": "Asia/Ho_Chi_Minh"
+    },
+    {
+      "name": "Chiang Mai",
+      "country": "Thailand",
+      "start": 1551398400,
+      "end": 1554076799,
+      "tz": "Asia/Bangkok"
+    },
+    {
+      "name": "Kyoto",
+      "country": "Japan",
+      "start": 1554076800,
+      "end": 1556668799,
+      "tz": "Asia/Tokyo"
+    },
+    {
+      "name": "Kuala Lumpur",
+      "country": "Malaysia",
+      "start": 1556668800,
+      "end": 1559347199,
+      "tz": "Asia/Kuala_Lumpur"
+    },
+    {
+      "name": "Santiago",
+      "country": "Chile",
+      "start": 1559347200,
+      "end": 1561939199,
+      "tz": "America/Santiago"
+    },
+    {
+      "name": "Lima",
+      "country": "Peru",
+      "start": 1561939200,
+      "end": 1564617599,
+      "tz": "America/Lima"
+    },
+    {
+      "name": "Medellin",
+      "country": "Colombia",
+      "start": 1564617600,
+      "end": 1567295999,
+      "tz": "America/Bogota"
+    },
+    {
+      "name": "Mexico City",
+      "country": "Mexico",
+      "start": 1567296000,
+      "end": 1569887999,
+      "tz": "America/Mexico_City"
     }
   ]
 }

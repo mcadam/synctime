@@ -1,39 +1,73 @@
 import React, { Component } from 'react';
 import './App.css';
 import Daybar from './components/Daybar';
+import SettingsBar from './components/SettingsBar';
 import { Container } from 'reactstrap';
-import { filterProgramToCurrentDate } from './utils';
+import { filterProgramToCurrentDate, getParams, getRYItinerary } from './utils';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHome, faClock, faCircle, faMapMarkerAlt, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 
+library.add(faHome, faClock, faCircle, faMapMarkerAlt, faToggleOn, faToggleOff);
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterProgram: false,
-      program: this.props.programs[0],
-      base: 'Europe/London'
-    };
+      date: null,
+      home: null,
+      itinerary: null,
+      filterItinerary: false
+    }
+    this.setRYProgram = this.setRYProgram.bind(this);
+    this.toggleRYFilter = this.toggleRYFilter.bind(this);
   }
 
-  handleFilterClick(value) {
-    this.setState('filterProgram', value);
+  componentDidMount() {
+    getParams().then(state => {
+      this.setState(state);
+    });
+  }
+
+  setRYProgram(itinerary) {
+    this.setState({ itinerary });
+  }
+
+  toggleRYFilter() {
+    this.setState(prevState => ({
+      filterItinerary: !prevState.filterItinerary
+    }));
   }
 
   render() {
-    let cities = this.state.program.cities;
-    if (this.state.filterProgram) {
-      cities = filterProgramToCurrentDate(cities);
+    let bars = null;
+    if (this.state.itinerary) {
+      let cities = getRYItinerary(this.state.itinerary);
+      if (this.state.filterItinerary) {
+        cities = filterProgramToCurrentDate(cities);
+      }
+      bars = cities.map((city, index) => {
+        return (
+          <Daybar icon="clock" key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} />
+        );
+      });
     }
-    const bars = cities.map((city, index) => {
-      return (
-        <Daybar key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} program={this.state.program} />
-      );
-    });
+
+    let current = null;
+    if (this.state.home) {
+      current = <Daybar icon="map-marker-alt" base={this.state.home.tz} tz={this.state.home.tz} city={this.state.home.name} country={this.state.home.country} />;
+    }
 
     return (
       <div className="my-3">
         <Container>
-          <Daybar base={this.state.base} tz={this.state.base} city="London" country="UK" program={this.state.program} />
+          <div className="mb-4">
+            <SettingsBar
+              {...this.state}
+              setRYProgram={this.setRYProgram}
+              toggleRYFilter={this.toggleRYFilter}
+            />
+          </div>
+          {current}
           {bars}
         </Container>
       </div>
