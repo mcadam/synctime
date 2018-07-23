@@ -36,6 +36,6 @@
   border-radius: 0.25rem !important;
   z-index: 1;
 }
-.rbt-input-hint-container {
-  overflow: hidden;
+.rbt-input-hint {
+  width: 113px;
 }
