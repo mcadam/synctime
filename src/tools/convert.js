@@ -37,6 +37,7 @@ readline.createInterface({
       tz: city[17],
       country: countries[city[8]],
       name: city[1].replace('"', '').replace('"', ''),
+      pop: city[14],
       // lat: city[4],
       // lng: city[5]
     });

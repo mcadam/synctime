@@ -36,6 +36,6 @@
   border-radius: 0.25rem !important;
   z-index: 1;
 }
-.badge {
-  vertical-align: text-bottom;
+.rbt-input-hint-container {
+  overflow: hidden;
 }

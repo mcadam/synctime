@@ -5,9 +5,9 @@ import SettingsBar from './components/SettingsBar';
 import { Container } from 'reactstrap';
 import { filterProgramToCurrentDate, getParams, getRYItinerary } from './utils';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHome, faClock, faCircle, faMapMarkerAlt, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faHome, faClock, faCircle, faMapMarkerAlt, faToggleOn, faToggleOff);
+library.add(faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff);
 
 class App extends Component {
   constructor(props) {
@@ -15,11 +15,13 @@ class App extends Component {
     this.state = {
       date: null,
       home: null,
+      cities: [],
       itinerary: null,
       filterItinerary: false
     }
     this.setRYProgram = this.setRYProgram.bind(this);
     this.toggleRYFilter = this.toggleRYFilter.bind(this);
+    this.addCity = this.addCity.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +40,12 @@ class App extends Component {
     }));
   }
 
+  addCity(city) {
+    this.setState(prevState => ({
+      cities: [...prevState.cities, city]
+    }));
+  }
+
   render() {
     let bars = null;
     if (this.state.itinerary) {
@@ -46,6 +54,12 @@ class App extends Component {
         cities = filterProgramToCurrentDate(cities);
       }
       bars = cities.map((city, index) => {
+        return (
+          <Daybar icon="clock" key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} />
+        );
+      });
+    } else {
+      bars = this.state.cities.map((city, index) => {
         return (
           <Daybar icon="clock" key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} />
         );
@@ -65,6 +79,7 @@ class App extends Component {
               {...this.state}
               setRYProgram={this.setRYProgram}
               toggleRYFilter={this.toggleRYFilter}
+              addCity={this.addCity}
             />
           </div>
           {current}

@@ -16,11 +16,6 @@ const initParams = {
   filterItinerary: false
 };
 
-const searchCity = query => {
-  const results = cities.filter(c => c.name.includes(query));
-  return results;
-};
-
 const getCityFromIp = async () => {
   try {
     const response = await (await fetch('https://geoip.nekudo.com/api/')).json()
@@ -42,6 +37,13 @@ export const getParams = async () => {
     initParams.home = city;
   }
   return initParams;
+};
+
+export const searchCities = query => {
+  const results = cities.filter(c =>
+    c.name.toLowerCase().includes(query.toLowerCase()));
+  results.sort((a, b) => { return b.pop - a.pop });
+  return results;
 };
 
 export const getRYItineraries = () => {

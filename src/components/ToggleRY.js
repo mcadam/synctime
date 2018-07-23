@@ -52,7 +52,10 @@ class ToggleRY extends React.Component {
 
     return (
       <div>
-        <Button outline color="primary" onClick={this.toggle}>RY</Button>
+        <Button outline color="secondary" onClick={this.toggle}>
+          <FontAwesomeIcon className="mr-2" size="lg" icon="globe" />
+          RY
+        </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Remote Year</ModalHeader>
           <ModalBody>

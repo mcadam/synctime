@@ -94,7 +94,7 @@ class Daybar extends React.Component {
             </small>
           </h5>
         </div>
-        <div className="d-flex flex-row align-items-center">
+        <div>
           <strong>{this.props.city}</strong>, {this.props.country}, {overlapHoursText}
         </div>
         <CardGroup className="flex-row flex-nowrap my-3 text-center">
