@@ -1,4 +1,5 @@
 import moment from 'moment';
+import url from 'url';
 import cities from './cities.json';
 import ry from './data.json';
 
@@ -33,8 +34,12 @@ const getCityFromIp = async () => {
 
 export const getParams = async () => {
   const city = await getCityFromIp();
+  const query = url.parse(window.location.href, true).query;
   if (city) {
     initParams.home = city;
+  }
+  if (query.ry) {
+    initParams.itinerary = query.ry;
   }
   return initParams;
 };

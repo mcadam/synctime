@@ -18,7 +18,8 @@
     "react-dom": "^16.4.1",
     "react-moment": "^0.7.9",
     "react-scripts": "1.1.4",
-    "reactstrap": "^6.3.0"
+    "reactstrap": "^6.3.0",
+    "url": "^0.11.0"
   },
   "scripts": {
     "start": "react-scripts start",
