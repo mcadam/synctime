@@ -20,6 +20,9 @@ const initParams = {
 const getCityFromIp = async () => {
   try {
     const response = await (await fetch('https://geoip.nekudo.com/api/')).json()
+    if (!response.city) {
+      return null;
+    }
     return {
       id: null,
       country: response.country.name,

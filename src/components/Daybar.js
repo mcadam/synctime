@@ -10,7 +10,7 @@ class Daybar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      base: moment.tz.guess(),
+      base: moment.tz.guess() || 'Europe/London',
       date: moment(),
       dropdownOpen: false
     };
