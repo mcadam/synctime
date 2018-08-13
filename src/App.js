@@ -5,9 +5,9 @@ import SettingsBar from './components/SettingsBar';
 import { Container } from 'reactstrap';
 import { filterProgramToCurrentDate, getParams, getRYItinerary } from './utils';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faCog, faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff);
+library.add(faTimesCircle, faCog, faCalendar, faHome, faClock, faCircle, faGlobe, faMapMarkerAlt, faToggleOn, faToggleOff);
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +22,8 @@ class App extends Component {
     this.setRYProgram = this.setRYProgram.bind(this);
     this.toggleRYFilter = this.toggleRYFilter.bind(this);
     this.addCity = this.addCity.bind(this);
+    this.removeCity = this.removeCity.bind(this);
+    this.makeHome = this.makeHome.bind(this);
   }
 
   componentDidMount() {
@@ -46,30 +48,44 @@ class App extends Component {
     }));
   }
 
+  removeCity(city) {
+    this.setState(prevState => ({
+      home: prevState.home !== city ? prevState.home : null,
+      cities: prevState.cities.filter(c => c !== city)
+    }));
+  }
+
+  makeHome(city) {
+    this.setState(prevState => ({
+      home: city,
+      cities: prevState.cities.filter(c => c !== city)
+    }));
+  }
+
   render() {
-    let bars = null;
+    let cities = this.state.cities;
+
     if (this.state.itinerary) {
-      let cities = getRYItinerary(this.state.itinerary);
+      let rycities = getRYItinerary(this.state.itinerary);
       if (this.state.filterItinerary) {
-        cities = filterProgramToCurrentDate(cities);
+        rycities = filterProgramToCurrentDate(cities);
       }
-      bars = cities.map((city, index) => {
-        return (
-          <Daybar icon="clock" key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} />
-        );
-      });
-    } else {
-      bars = this.state.cities.map((city, index) => {
-        return (
-          <Daybar icon="clock" key={city.name} base={this.state.base} tz={city.tz} city={city.name} country={city.country} />
-        );
-      });
+      cities = [...cities, ...rycities];
     }
 
-    let current = null;
+    let home = null;
     if (this.state.home) {
-      current = <Daybar icon="map-marker-alt" base={this.state.home.tz} tz={this.state.home.tz} city={this.state.home.name} country={this.state.home.country} />;
+      home = (
+        <Daybar icon="map-marker-alt" key={this.state.home.name} base={this.state.home} city={this.state.home} removeCity={this.removeCity} makeHome={this.makeHome} />
+      );
     }
+
+
+    const bars = cities.map((city, index) => {
+      return (
+        <Daybar icon="clock" key={city.name} base={this.state.home} city={city} removeCity={this.removeCity} makeHome={this.makeHome} />
+      );
+    });
 
     return (
       <div className="my-3">
@@ -82,7 +98,7 @@ class App extends Component {
               addCity={this.addCity}
             />
           </div>
-          {current}
+          {home}
           {bars}
         </Container>
       </div>

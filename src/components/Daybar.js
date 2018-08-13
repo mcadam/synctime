@@ -2,32 +2,53 @@ import React from 'react';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Card, CardGroup, Badge } from 'reactstrap';
+import { Card, CardGroup } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { getColorForHour, isOverlapping, isCurrent, getOffset } from '../utils';
 
 class Daybar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      base: this.props.base || moment.tz.guess(),
-      date: this.props.date || moment()
+      base: moment.tz.guess(),
+      date: moment(),
+      dropdownOpen: false
     };
+    this.toggleOptions = this.toggleOptions.bind(this);
+    this.removeCity = this.removeCity.bind(this);
+    this.makeHome = this.makeHome.bind(this);
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => this.setState({ time: Date.now() }), 30000);
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
+  toggleOptions() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  removeCity() {
+    this.props.removeCity(this.props.city);
+  }
+
+  makeHome() {
+    this.props.makeHome(this.props.city);
+  }
+
   render() {
     let overlapHours = [];
+    const base = this.props.base ? this.props.base.tz : this.state.base;
+    const date = this.props.date || this.state.date;
 
     const hours = Array(24).fill(null).map((value, index) => {
-      const baseHour = moment(this.state.date).tz(this.state.base).hour(index);
-      const tzHour = baseHour.clone().tz(this.props.tz);
+      const baseHour = moment(date).tz(base).hour(index);
+      const tzHour = baseHour.clone().tz(this.props.city.tz);
       const color = getColorForHour(tzHour);
       const overlap = isOverlapping(tzHour, baseHour);
       const current = isCurrent(baseHour);
@@ -72,30 +93,57 @@ class Daybar extends React.Component {
       );
     });
 
-    let overlapHoursText = `No availability ${this.state.base}`;
+    let overlapHoursText = `No availability ${base}`;
     if (overlapHours.length === 1) {
-      overlapHoursText = `Available ${this.state.base} ${overlapHours[0]}`;
+      overlapHoursText = `Available ${base} ${overlapHours[0]}`;
     } else if (overlapHours.length > 1) {
-      overlapHoursText = `Available ${this.state.base} ${overlapHours[0]} - ${overlapHours.pop()}`;
+      overlapHoursText = `Available ${base} ${overlapHours[0]}-${overlapHours.pop()}`;
     }
 
-    const offset = <Badge color="secondary" pill>{getOffset(this.props.tz, this.state.base)}</Badge>;
+    const offset = <h5 className="ml-1 m-0">{getOffset(this.props.city.tz, base)}</h5>;
 
-    const statusColor = getColorForHour(moment.tz(this.props.tz));
+    const statusColor = getColorForHour(moment.tz(this.props.city.tz));
 
     return (
       <div>
         <div className="d-flex flex-row align-items-center">
-          <FontAwesomeIcon icon={this.props.icon} size="xs" className={`mr-2 text-${statusColor}`} />
+          <FontAwesomeIcon icon={this.props.icon} className={`mr-2 text-${statusColor}`} />
           <h5 className="m-0">
-            <Moment tz={this.props.tz} format="hh:mm"/>
+            <strong>
+              <Moment tz={this.props.city.tz} format="hh:mm"/>
+            </strong>
             <small>
-              <Moment tz={this.props.tz} format="A" className="ml-1 small"/>
+              <Moment tz={this.props.city.tz} format="A" className="ml-1 small"/>
             </small>
           </h5>
+          {offset}
+          <div className="ml-auto">
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggleOptions}>
+              <DropdownToggle tag="span" className="mr-4 p-2 cursor-pointer">
+                <FontAwesomeIcon icon="cog" size="xs"  />
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem
+                  className="align-items-center d-flex"
+                  onClick={this.makeHome}
+                >
+                  <FontAwesomeIcon icon="map-marker-alt" className="mr-2"
+                    size="xs"/>
+                  Make home
+                </DropdownItem>
+                <DropdownItem
+                  className="text-danger align-items-center d-flex"
+                  onClick={this.removeCity}
+                >
+                  <FontAwesomeIcon icon="times-circle" className="mr-2" size="xs" />
+                  Delete
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </div>
         <div>
-          <strong>{this.props.city}</strong>, {this.props.country}, {overlapHoursText}
+          <strong>{this.props.city.name}</strong>, {this.props.city.country} <span className="d-none d-md-inline-block">({overlapHoursText})</span>
         </div>
         <CardGroup className="flex-row flex-nowrap my-3 text-center">
           {hours}

@@ -2,7 +2,6 @@ import React from 'react';
 import { Row, Col, Button } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Datetime from 'react-datetime';
-import Moment from 'react-moment';
 import ToggleRY from './ToggleRY';
 import SelectCity from './SelectCity';
 
