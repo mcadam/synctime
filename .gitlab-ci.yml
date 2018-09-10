@@ -356,7 +356,7 @@ canary:
     - persist_environment_url
   environment:
     name: production
-    url: http://$CI_PROJECT_PATH_SLUG.$AUTO_DEVOPS_DOMAIN
+    url: http://$AUTO_DEVOPS_DOMAIN
   artifacts:
     paths: [environment_url.txt]
 
