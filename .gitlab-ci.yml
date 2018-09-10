@@ -612,6 +612,8 @@ rollout 100%:
       --set application.track="$track" \
       --set application.database_url="$DATABASE_URL" \
       --set service.url="$CI_ENVIRONMENT_URL" \
+      --set service.externalPort=80 \
+      --set service.internalPort=80 \
       --set replicaCount="$replicas" \
       --set postgresql.enabled="$postgres_enabled" \
       --set postgresql.nameOverride="postgres" \
