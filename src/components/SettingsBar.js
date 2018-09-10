@@ -50,15 +50,6 @@ class SettingsBar extends React.Component {
             toggleRYFilter={this.props.toggleRYFilter}
           />
         </Col>
-        <Col xs="auto" className="pl-1">
-          <Datetime
-            renderInput={this.renderInput}
-            value={this.props.date}
-            onChange={this.handleDateChange}
-            timeFormat={false}
-            closeOnSelect={true}
-          />
-        </Col>
       </Row>
     );
   }
