@@ -596,7 +596,7 @@ rollout 100%:
       secret_name=''
     fi
 
-    helm upgrade --install \
+    helm upgrade --install $TILLER_TLS_OPTS \
       --wait \
       --set service.enabled="$service_enabled" \
       --set releaseOverride="$CI_ENVIRONMENT_SLUG" \
@@ -743,6 +743,12 @@ rollout 100%:
 
   function install_tiller() {
     echo "Checking Tiller..."
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['ca\.crt']}" | base64 -D > tiller-ca.crt
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.crt']}" | base64 -D > tiller.crt
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.key']}" | base64 -D > tiller.key
+
+    export TILLER_TLS_OPTS='--tls --tls-ca-cert tiller-ca.crt --tls-cert tiller.crt --tls-key tiller.key'
+
     helm init --upgrade
     kubectl rollout status -n "$TILLER_NAMESPACE" -w "deployment/tiller-deploy"
     if ! helm version --debug; then
