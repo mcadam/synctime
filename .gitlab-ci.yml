@@ -743,9 +743,9 @@ rollout 100%:
 
   function install_tiller() {
     echo "Checking Tiller..."
-    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['ca\.crt']}" | base64 -D > tiller-ca.crt
-    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.crt']}" | base64 -D > tiller.crt
-    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.key']}" | base64 -D > tiller.key
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['ca\.crt']}" | base64 -d > tiller-ca.crt
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.crt']}" | base64 -d > tiller.crt
+    kubectl get secrets/tiller-secret -n "$TILLER_NAMESPACE" -o "jsonpath={.data['tls\.key']}" | base64 -d > tiller.key
 
     export TILLER_TLS_OPTS='--tls --tls-ca-cert tiller-ca.crt --tls-cert tiller.crt --tls-key tiller.key'
 
