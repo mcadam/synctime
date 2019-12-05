@@ -12,7 +12,7 @@ imagePullSecrets:
   - name: gitlab-registry
 
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "production"
 
 serviceAccount:
   # Specifies whether a service account should be created
