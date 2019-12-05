@@ -43,13 +43,6 @@ class SettingsBar extends React.Component {
             addCity={this.props.addCity}
           />
         </Col>
-        <Col xs="auto" className="px-1">
-          <ToggleRY
-            filterItinerary={this.props.filterItinerary}
-            setRYProgram={this.props.setRYProgram}
-            toggleRYFilter={this.props.toggleRYFilter}
-          />
-        </Col>
       </Row>
     );
   }
