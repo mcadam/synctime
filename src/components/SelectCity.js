@@ -34,7 +34,7 @@ class SelectCity extends React.Component {
         {...this.state}
         align="left"
         labelKey={option => `${option.name}, ${option.country}`}
-        inputProps={{ size: 10}}
+        inputProps={{ size: 30}}
         minLength={2}
         placeholder="Add a city"
         onSearch={this.handleSearch}
