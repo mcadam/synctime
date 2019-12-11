@@ -19,15 +19,15 @@ const initParams = {
 
 const getCityFromIp = async () => {
   try {
-    const response = await (await fetch('https://geoip.nekudo.com/api/')).json()
+    const response = await (await fetch('https://ipapi.co/json/')).json()
     if (!response.city) {
       return null;
     }
     return {
       id: null,
-      country: response.country.name,
+      country: response.country_name,
       name: response.city,
-      tz: response.location.time_zone
+      tz: response.timezone
     };
   } catch (error) {
     console.log(error);

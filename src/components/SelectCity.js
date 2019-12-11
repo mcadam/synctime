@@ -32,6 +32,7 @@ class SelectCity extends React.Component {
     return (
       <AsyncTypeahead
         {...this.state}
+        id="search-city"
         align="left"
         labelKey={option => `${option.name}, ${option.country}`}
         inputProps={{ size: 30}}
