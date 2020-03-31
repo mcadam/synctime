@@ -1,0 +1,14 @@
+FROM node:13-alpine
+RUN apk add bash
+
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["npm", "run", "develop", "--", "-H", "0.0.0.0"]
