@@ -58,7 +58,7 @@ export default () => {
       <Timeline.Item
         key={city.id}
         label={
-          <Title level={1} style={{ marginRight: 10 }}>
+          <Title level={1} style={{ marginRight: 10, marginBottom: 0 }}>
             <Moment tz={city.tz} format="HH:mm"/>
           </Title>
         }
@@ -66,7 +66,7 @@ export default () => {
           <ClockCircleOutlined style={{ fontSize: '16px', color: getColorForHour(current) }} />
         }
       >
-        <Title level={1}>
+        <Title level={1} style={{ marginBottom: 0 }}>
           {city.name}
         </Title>
       </Timeline.Item>,
