@@ -16,22 +16,22 @@ export default ({ time, format24Hours, seconds }) => {
         borderRadius: 3,
         color: "white",
         fontSize: "3.5em",
-        backgroundColor: getColorForHour(time)
+        backgroundColor: getColorForHour(time),
       }}
     >
-      {(digitAM && !format24Hours) &&
-      <span
-        className="text-monospace"
-        style={{
-          position: "absolute",
-          fontSize: "0.2em",
-          bottom: 0,
-          left: 3,
-        }}
-      >
-        {digitAM}
-      </span>
-      }
+      {digitAM && !format24Hours && (
+        <span
+          className="text-monospace"
+          style={{
+            position: "absolute",
+            fontSize: "0.2em",
+            bottom: 0,
+            left: 3,
+          }}
+        >
+          {digitAM}
+        </span>
+      )}
       {digit}
     </span>
   )
@@ -39,9 +39,7 @@ export default ({ time, format24Hours, seconds }) => {
     <span style={{ margin: "0 10px" }}>
       {digit(hours, ampm)}
       {digit(minutes)}
-      {seconds &&
-        digit(secs)
-      }
+      {seconds && digit(secs)}
     </span>
   )
 }

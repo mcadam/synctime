@@ -43,13 +43,13 @@ export default () => {
     )
   }
 
-  const ref = React.createRef();
+  const ref = React.createRef()
 
   useEffect(() => {
     ref.current.scrollIntoView({
-      behavior: 'smooth',
-      inline: 'center',
-    });
+      behavior: "smooth",
+      inline: "center",
+    })
   })
 
   useEffect(() => {
@@ -62,12 +62,21 @@ export default () => {
   const cityList = cities.map(city => {
     const current = moment(currentTime).tz(city.tz)
     const currentHour = current.hour()
-    const hours= []
+    const hours = []
     for (var i = currentHour - 11; i <= currentHour + 12; i++) {
       const hour = moment.tz(city.tz).hour(i)
-      hours.push(<Hour key={i} time={hour} format24Hours={config.format24Hours}/>)
+      hours.push(
+        <Hour key={i} time={hour} format24Hours={config.format24Hours} />
+      )
       if (i === currentHour) {
-        hours.push(<Clock key={city.id} time={current} seconds={config.seconds} format24Hours={config.format24Hours}/>)
+        hours.push(
+          <Clock
+            key={city.id}
+            time={current}
+            seconds={config.seconds}
+            format24Hours={config.format24Hours}
+          />
+        )
       }
     }
 
