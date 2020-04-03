@@ -18,11 +18,13 @@
     "antd": "^4.1.0",
     "gatsby": "^2.19.45",
     "gatsby-plugin-antd": "^2.2.0",
+    "gatsby-plugin-react-helmet": "^3.2.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
     "react-moment": "^0.9.7",
     "use-persisted-state": "^0.3.0"
   },
