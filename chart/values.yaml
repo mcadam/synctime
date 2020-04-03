@@ -9,7 +9,7 @@ image:
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
-  - name: gitlab-registry
+  - name: gitlab-registry-adam-remote
 
 nameOverride: ""
 fullnameOverride: "production"
