@@ -10,6 +10,9 @@ format:
 dist:
 	@docker build -t synctime-prod .
 
+serve: dist
+	@docker run --rm -p 8080:80 synctime-prod
+
 stop:
 	@docker stop synctime
 
