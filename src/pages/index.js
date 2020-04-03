@@ -21,7 +21,7 @@ import Settings from "../components/settings"
 import { getDefaultConfig } from "../utils/config"
 import { getOffset, getUTCOffset } from "../utils/datetime"
 
-const { Title, Text } = Typography
+const { Title } = Typography
 const useCitiesState = createPersistedState("cities")
 const useConfigState = createPersistedState("config")
 
@@ -34,8 +34,9 @@ export default () => {
 
   if (cities.length === 0) {
     return (
-      <Layout>
+      <Layout key="no-cities">
         <Result
+          key="result-no-cities"
           icon={
             <Empty
               image={Empty.PRESENTED_IMAGE_SIMPLE}
@@ -43,7 +44,7 @@ export default () => {
             />
           }
           extra={
-            <Link to="edit">
+            <Link to="/edit">
               <Button type="primary">Create Now</Button>
             </Link>
           }
@@ -170,7 +171,7 @@ export default () => {
   )
 
   return (
-    <Layout header={header}>
+    <Layout key="available-cities" header={header}>
       {cityList}
       <Drawer
         title="Settings"

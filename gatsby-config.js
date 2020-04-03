@@ -5,8 +5,5 @@
  */
 
 module.exports = {
-  plugins: [
-    "gatsby-plugin-antd",
-    "gatsby-plugin-react-helmet",
-  ],
+  plugins: ["gatsby-plugin-antd", "gatsby-plugin-react-helmet"],
 }
