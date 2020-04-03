@@ -87,7 +87,7 @@ export default () => {
         const hour = moment.tz(city.tz).hour(i)
         hours.push(
           <Hour
-            key={i}
+            key={`hour-${i}-${city.id}`}
             time={hour}
             format24Hours={config.format24Hours}
             workingHours={config.workingHours}
@@ -98,7 +98,7 @@ export default () => {
       if (i === currentHour) {
         hours.push(
           <Clock
-            key={city.id}
+            key={`clock-${i}-${city.id}`}
             time={current}
             seconds={config.seconds}
             format24Hours={config.format24Hours}
@@ -133,7 +133,7 @@ export default () => {
 
     return (
       <div
-        key={city.id}
+        key={`city-${city.id}`}
         style={{
           whiteSpace: "nowrap",
           textAlign: "center",
