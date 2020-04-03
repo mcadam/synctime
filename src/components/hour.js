@@ -9,9 +9,9 @@ export default ({ time, format24Hours, workingHours, disableWorkingHours }) => {
     workingHours)
   return (
     <Tag
-      className="text-monospace"
       color={color}
       style={{
+        fontFamily: "SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
         borderRadius: "20px",
         height: 20,
         padding: "0 5px",

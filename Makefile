@@ -7,6 +7,9 @@ run:
 format:
 	@docker run --rm -v $(PWD):/app -v /app/node_modules -e GATSBY_TELEMETRY_DISABLED=1 synctime npm run format
 
+dist:
+	@docker run --rm -v $(PWD):/app -v /app/node_modules -e GATSBY_TELEMETRY_DISABLED=1 synctime npm run build
+
 stop:
 	@docker stop synctime
 

@@ -11,8 +11,8 @@ export default ({ time, format24Hours, seconds, workingHours,
       workingHours)
   const digit = (digit, digitAM) => (
     <span
-      className="text-monospace"
       style={{
+        fontFamily: "SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
         position: "relative",
         margin: 4,
         padding: "6px 4px",
