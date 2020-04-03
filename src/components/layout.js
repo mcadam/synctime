@@ -5,7 +5,7 @@ const { Header, Content } = Layout
 const { Title } = Typography
 
 export default ({ header, children }) => (
-  <Layout theme="dark" style={{ minHeight: "100vh", backgroundColor: "white" }}>
+  <Layout style={{ minHeight: "100vh", backgroundColor: "white" }}>
     <Helmet>
       <meta charSet="utf-8" />
       <title>SyncTime</title>
