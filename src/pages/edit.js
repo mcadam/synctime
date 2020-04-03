@@ -3,10 +3,14 @@ import { Typography, Button, List, Row, Col, Input, AutoComplete } from "antd"
 import createPersistedState from "use-persisted-state"
 import { searchCities, boldSubString } from "../utils/search"
 import Layout from "../components/layout"
-import { HomeOutlined, DeleteOutlined, ArrowLeftOutlined } from "@ant-design/icons"
+import {
+  HomeOutlined,
+  DeleteOutlined,
+  ArrowLeftOutlined,
+} from "@ant-design/icons"
 const { Search } = Input
 const { Item } = List
-const { Text } = Typography;
+const { Text } = Typography
 
 const useCitiesState = createPersistedState("cities")
 
@@ -80,18 +84,33 @@ export default () => {
             style={{ width: 500 }}
             dataSource={cities}
             renderItem={city => (
-              <Item actions={[
-                <Button type="primary" icon={<HomeOutlined />} onClick={() => makeHome(city)}>Make Home</Button>,
-                <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => deleteCity(city)}>Delete</Button>
-              ]}
+              <Item
+                actions={[
+                  <Button
+                    type="primary"
+                    icon={<HomeOutlined />}
+                    onClick={() => makeHome(city)}
+                  >
+                    Make Home
+                  </Button>,
+                  <Button
+                    type="primary"
+                    danger
+                    icon={<DeleteOutlined />}
+                    onClick={() => deleteCity(city)}
+                  >
+                    Delete
+                  </Button>,
+                ]}
               >
-                <Text strong>{city.name} - {city.country}</Text>
+                <Text strong>
+                  {city.name} - {city.country}
+                </Text>
               </Item>
             )}
           />
         </Col>
       </Row>
-
     </Layout>
   )
 }

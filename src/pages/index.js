@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react"
 import "moment-timezone"
 import moment from "moment"
 import createPersistedState from "use-persisted-state"
-import { useWindowSize } from '@react-hook/window-size'
-import { sortBy } from 'lodash';
+import { useWindowSize } from "@react-hook/window-size"
+import { sortBy } from "lodash"
 
 import { Tag, Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
 import { Link } from "gatsby"
-import { EnvironmentOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons"
+import {
+  EnvironmentOutlined,
+  SettingOutlined,
+  MenuOutlined,
+} from "@ant-design/icons"
 
 import Layout from "../components/layout"
 import Clock from "../components/clock"
@@ -56,7 +60,7 @@ export default () => {
       block: "start",
       inline: "center",
     })
-  }, [ width, height ]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [width, height]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -67,7 +71,11 @@ export default () => {
 
   let orderedCities = cities
   if (config.orderTz) {
-    orderedCities = sortBy(cities, city => moment(currentTime).tz(city.tz).utcOffset())
+    orderedCities = sortBy(cities, city =>
+      moment(currentTime)
+        .tz(city.tz)
+        .utcOffset()
+    )
   }
 
   const cityList = orderedCities.map((city, index) => {
@@ -100,7 +108,7 @@ export default () => {
         )
       }
     }
-    const currentRef = index === 0 ? ref : null;
+    const currentRef = index === 0 ? ref : null
     const home = cities.filter(c => c.home)
     let offset = getUTCOffset(current)
     if (home.length) {
@@ -109,13 +117,17 @@ export default () => {
 
     const cityTitle = (
       <Title level={3} style={{ margin: "0 10px 0.5em 10px" }}>
-        {city.home &&
-        <EnvironmentOutlined style={{ fontSize: 16, marginRight: 6, verticalAlign: 0 }}/>
-        }
+        {city.home && (
+          <EnvironmentOutlined
+            style={{ fontSize: 16, marginRight: 6, verticalAlign: 0 }}
+          />
+        )}
         {city.name}
-        {config.showOffset && !city.home &&
-          <Tag style={{ marginLeft: 8, verticalAlign: "text-bottom" }}>{offset}</Tag>
-        }
+        {config.showOffset && !city.home && (
+          <Tag style={{ marginLeft: 8, verticalAlign: "text-bottom" }}>
+            {offset}
+          </Tag>
+        )}
       </Title>
     )
 
@@ -130,8 +142,14 @@ export default () => {
         }}
       >
         {cityTitle}
-        <div ref={currentRef} style={{ display: "flex", alignItems: "center",
-          justifyContent: "center" }}>
+        <div
+          ref={currentRef}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {hours}
         </div>
       </div>

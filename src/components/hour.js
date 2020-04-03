@@ -5,13 +5,15 @@ import { getColorForHour } from "../utils/datetime"
 export default ({ time, format24Hours, workingHours, disableWorkingHours }) => {
   const hour = format24Hours ? time.format("HH") : time.format(" h")
   const ampm = time.format("A")
-  const color = disableWorkingHours ? "#ccc" : getColorForHour(time,
-    workingHours)
+  const color = disableWorkingHours
+    ? "#ccc"
+    : getColorForHour(time, workingHours)
   return (
     <Tag
       color={color}
       style={{
-        fontFamily: "SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+        fontFamily:
+          "SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
         borderRadius: "20px",
         height: 20,
         padding: "0 5px",

@@ -11,8 +11,12 @@ export default ({ header, children }) => (
       </Title>
     </Header>
     <Content
-      style={{ padding: "0 50px", overflowX: "auto", textAlign: "center",
-        marginBottom: 20 }}
+      style={{
+        padding: "0 50px",
+        overflowX: "auto",
+        textAlign: "center",
+        marginBottom: 20,
+      }}
     >
       {children}
     </Content>
