@@ -1,11 +1,14 @@
 import React from "react"
 import { getColorForHour } from "../utils/datetime"
 
-export default ({ time, format24Hours, seconds }) => {
+export default ({ time, format24Hours, seconds, workingHours,
+  disableWorkingHours }) => {
   const hours = format24Hours ? time.format("HH") : time.format("hh")
   const minutes = time.format("mm")
   const secs = time.format("ss")
   const ampm = time.format("A")
+  const color = disableWorkingHours ? "rgba(0,0,0,.85)" : getColorForHour(time,
+      workingHours)
   const digit = (digit, digitAM) => (
     <span
       className="text-monospace"
@@ -16,7 +19,7 @@ export default ({ time, format24Hours, seconds }) => {
         borderRadius: 3,
         color: "white",
         fontSize: "3.5em",
-        backgroundColor: getColorForHour(time),
+        backgroundColor: color,
       }}
     >
       {digitAM && !format24Hours && (

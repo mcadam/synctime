@@ -1,11 +1,5 @@
-const workingHours = {
-  before: 6,
-  start: 9,
-  end: 17,
-  after: 21,
-}
 
-export const getColorForHour = hour => {
+export const getColorForHour = (hour, workingHours) => {
   const isWorkingHours = hour.isBetween(
     hour.clone().hour(workingHours.start),
     hour.clone().hour(workingHours.end),

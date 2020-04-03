@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react"
 import "moment-timezone"
 import moment from "moment"
 import createPersistedState from "use-persisted-state"
+import { useWindowSize } from '@react-hook/window-size'
 
-import { Typography, Row, Col, Button, Result, Empty } from "antd"
+import { Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
 import { Link } from "gatsby"
 import { SettingOutlined, MenuOutlined } from "@ant-design/icons"
 
 import Layout from "../components/layout"
 import Clock from "../components/clock"
 import Hour from "../components/hour"
+import Settings from "../components/settings"
 
 import { getDefaultConfig } from "../utils/config"
 
@@ -18,9 +20,10 @@ const useCitiesState = createPersistedState("cities")
 const useConfigState = createPersistedState("config")
 
 export default () => {
+  const [width, height] = useWindowSize()
   const [cities] = useCitiesState([])
-  const [config] = useConfigState(getDefaultConfig())
-  const [collapsed, setCollapsed] = useState(true)
+  const [config, setConfig] = useConfigState(getDefaultConfig())
+  const [visible, setVisible] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment())
 
   if (!cities.length) {
@@ -48,9 +51,10 @@ export default () => {
   useEffect(() => {
     ref.current.scrollIntoView({
       behavior: "smooth",
+      block: "start",
       inline: "center",
     })
-  })
+  }, [ width, height ])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -59,15 +63,23 @@ export default () => {
     return () => clearInterval(intervalId)
   })
 
-  const cityList = cities.map(city => {
+  const cityList = cities.map((city, index) => {
     const current = moment(currentTime).tz(city.tz)
     const currentHour = current.hour()
     const hours = []
     for (var i = currentHour - 11; i <= currentHour + 12; i++) {
-      const hour = moment.tz(city.tz).hour(i)
-      hours.push(
-        <Hour key={i} time={hour} format24Hours={config.format24Hours} />
-      )
+      if (!config.onlyClocks) {
+        const hour = moment.tz(city.tz).hour(i)
+        hours.push(
+          <Hour
+            key={i}
+            time={hour}
+            format24Hours={config.format24Hours}
+            workingHours={config.workingHours}
+            disableWorkingHours={config.disableWorkingHours}
+          />
+        )
+      }
       if (i === currentHour) {
         hours.push(
           <Clock
@@ -75,10 +87,13 @@ export default () => {
             time={current}
             seconds={config.seconds}
             format24Hours={config.format24Hours}
+            workingHours={config.workingHours}
+            disableWorkingHours={config.disableWorkingHours}
           />
         )
       }
     }
+    const currentRef = index === 0 ? ref : null;
 
     return (
       <div
@@ -87,10 +102,11 @@ export default () => {
           whiteSpace: "nowrap",
           textAlign: "center",
           display: "inline-block",
+          marginTop: 10,
         }}
       >
         <Title level={4}>{city.name}</Title>
-        <div ref={ref} style={{ display: "flex", alignItems: "center" }}>
+        <div ref={currentRef} style={{ display: "flex", alignItems: "center" }}>
           {hours}
         </div>
       </div>
@@ -105,10 +121,24 @@ export default () => {
         </Link>
       </Col>
       <Col span={12} style={{ textAlign: "right" }}>
-        <SettingOutlined onClick={() => setCollapsed(!collapsed)} />
+        <SettingOutlined onClick={() => setVisible(!visible)} />
       </Col>
     </Row>
   )
 
-  return <Layout header={header}>{cityList}</Layout>
+  return (
+    <Layout header={header}>
+      {cityList}
+      <Drawer
+        title="Settings"
+        placement="right"
+        closable={true}
+        onClose={() => setVisible(false)}
+        visible={visible}
+        width={350}
+      >
+        <Settings config={config} setConfig={setConfig} />
+      </Drawer>
+    </Layout>
+  )
 }

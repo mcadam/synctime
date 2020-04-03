@@ -50,7 +50,7 @@ export default () => {
       <Row>
         <Col xs={{ span: 24, offset: 0 }} lg={{ span: 10, offset: 7 }}>
           <AutoComplete
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: 10, marginBottom: 30 }}
             onSearch={handleSearch}
             onSelect={handleSelect}
             onChange={handleChange}

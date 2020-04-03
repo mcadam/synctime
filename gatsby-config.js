@@ -5,5 +5,10 @@
  */
 
 module.exports = {
+  siteMetadata: {
+    title: `SyncTime`,
+    description: `A simple clock...`,
+    author: `adam`,
+  },
   plugins: ["gatsby-plugin-antd"],
 }

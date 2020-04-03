@@ -14,9 +14,11 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@react-hook/window-size": "^1.0.13",
     "antd": "^4.1.0",
     "gatsby": "^2.19.45",
     "gatsby-plugin-antd": "^2.2.0",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "react": "^16.12.0",
