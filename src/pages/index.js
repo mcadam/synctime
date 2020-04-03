@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "moment-timezone"
 import moment from "moment"
 import { Badge, Typography, Row, Col, Button, Result, Empty } from "antd"
@@ -33,6 +33,15 @@ export default () => {
       </Layout>
     )
   }
+
+  const ref = React.createRef();
+
+  useEffect(() => {
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+    });
+  })
 
   const cityList = cities.map(city => {
     const current = moment.tz(city.tz)
@@ -87,6 +96,7 @@ export default () => {
         </Title>
         <div style={{ marginTop: 25 }}>
           {hoursBefore}
+          <span ref={ref}>
           <Title
             level={1}
             style={{
@@ -97,6 +107,7 @@ export default () => {
           >
             {current.format("HH:mm")}
           </Title>
+          </span>
           {hoursAfter}
         </div>
       </div>
