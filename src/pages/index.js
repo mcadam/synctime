@@ -1,16 +1,14 @@
 import React, { useState } from "react"
 import "moment-timezone"
-import Moment from "react-moment"
 import moment from "moment"
-import { Badge, Typography, Row, Col, Button, Result, Empty, Timeline } from "antd"
+import { Badge, Typography, Row, Col, Button, Result, Empty } from "antd"
 import { Link } from "gatsby"
 import createPersistedState from "use-persisted-state"
-import { ClockCircleOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons"
+import { SettingOutlined, MenuOutlined } from "@ant-design/icons"
 import Layout from "../components/layout"
 import { getColorForHour } from "../utils/datetime"
 const useCitiesState = createPersistedState("cities")
-const { Title } = Typography;
-
+const { Title } = Typography
 
 export default () => {
   const [cities] = useCitiesState([])
@@ -40,63 +38,83 @@ export default () => {
     const current = moment.tz(city.tz)
     const currentHour = current.hour()
     const hoursBefore = []
-    for (var i = currentHour-11; i <= currentHour; i++) {
+    for (var i = currentHour - 11; i <= currentHour; i++) {
       const hour = moment.tz(city.tz).hour(i)
+      let count = hour.format("HH")
       hoursBefore.push(
-        <Badge key={i} count={hour.format("HH")} style={{ marginRight: 5, backgroundColor: getColorForHour(hour) }} />
+        <Badge
+          key={i}
+          count={count}
+          style={{
+            marginBottom: 18,
+            marginRight: 5,
+            backgroundColor: getColorForHour(hour),
+          }}
+        />
       )
     }
     const hoursAfter = []
-    for (i = currentHour+1; i <= currentHour+12; i++) {
+    for (i = currentHour + 1; i <= currentHour + 12; i++) {
       const hour = moment.tz(city.tz).hour(i)
+      let count = hour.format("HH")
       hoursAfter.push(
-        <Badge key={i} count={hour.format("HH")} style={{ marginRight: 5, backgroundColor: getColorForHour(hour) }} />
+        <Badge
+          key={i}
+          count={count}
+          style={{
+            marginBottom: 18,
+            marginRight: 5,
+            backgroundColor: getColorForHour(hour),
+          }}
+        />
       )
     }
 
-    return ([
-      <Timeline.Item
+    return (
+      <div
         key={city.id}
-        label={
-          <Title level={1} style={{ marginRight: 10, marginBottom: 0 }}>
-            <Moment tz={city.tz} format="HH:mm"/>
-          </Title>
-        }
-        dot={
-          <ClockCircleOutlined style={{ fontSize: '16px', color: getColorForHour(current) }} />
-        }
+        style={{
+          whiteSpace: "nowrap",
+          textAlign: "center",
+          display: "inline-block",
+        }}
       >
-        <Title level={1} style={{ marginBottom: 0 }}>
+        <Title
+          level={4}
+          style={{ position: "fixed", margin: "auto", left: 0, right: 0 }}
+        >
           {city.name}
         </Title>
-      </Timeline.Item>,
-      <Timeline.Item
-        color={getColorForHour(current)}
-        label={hoursBefore}
-      >
-        {hoursAfter}
-      </Timeline.Item>
-    ])
+        <div style={{ marginTop: 25 }}>
+          {hoursBefore}
+          <Title
+            level={1}
+            style={{
+              margin: "5px 15px",
+              color: getColorForHour(current),
+              display: "inline-block",
+            }}
+          >
+            {current.format("HH:mm")}
+          </Title>
+          {hoursAfter}
+        </div>
+      </div>
+    )
   })
 
   const header = (
     <Row>
       <Col span={12}>
-        <Link to="edit" style={{ color: 'inherit' }}>
+        <Link to="edit" style={{ color: "inherit" }}>
           <MenuOutlined />
         </Link>
       </Col>
-      <Col span={12} style={{ textAlign: 'right' }}>
-        <SettingOutlined onClick={() => setCollapsed(!collapsed)}/>
+      <Col span={12} style={{ textAlign: "right" }}>
+        <SettingOutlined onClick={() => setCollapsed(!collapsed)} />
       </Col>
     </Row>
   )
 
-  return (
-    <Layout header={header}>
-      <Timeline mode="left" style={{ whiteSpace: 'nowrap' }}>
-        {cityList}
-      </Timeline>
-    </Layout>
-  )
+  return <Layout header={header}>{cityList}</Layout>
 }

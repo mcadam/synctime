@@ -7,25 +7,22 @@ import { ArrowLeftOutlined } from "@ant-design/icons"
 const { Search } = Input
 const useCitiesState = createPersistedState("cities")
 
-
 export default () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("")
   const [cities, setCities] = useCitiesState([])
   const [options, setOptions] = useState([])
 
   const handleSearch = query => {
     const result = query ? searchCities(query) : []
-    setOptions(result.map(city => {
-      const label = boldSubString(`${city.name}, ${city.country}`, query)
-      return {
-        label: (
-          <span
-            dangerouslySetInnerHTML={{ __html: label }}
-          />
-        ),
-        value: JSON.stringify(city),
-      }
-    }))
+    setOptions(
+      result.map(city => {
+        const label = boldSubString(`${city.name}, ${city.country}`, query)
+        return {
+          label: <span dangerouslySetInnerHTML={{ __html: label }} />,
+          value: JSON.stringify(city),
+        }
+      })
+    )
   }
 
   const handleSelect = data => {
@@ -44,22 +41,16 @@ export default () => {
     setValue(data)
   }
 
-  const cityList = cities.map(city => (
-    <h2 key={city.id}>
-      {city.name}
-    </h2>
-  ))
+  const cityList = cities.map(city => <h2 key={city.id}>{city.name}</h2>)
 
-  const header = (
-    <ArrowLeftOutlined onClick={() => window.history.back()} />
-  )
+  const header = <ArrowLeftOutlined onClick={() => window.history.back()} />
 
   return (
     <Layout header={header}>
       <Row>
         <Col xs={{ span: 24, offset: 0 }} lg={{ span: 10, offset: 7 }}>
           <AutoComplete
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             onSearch={handleSearch}
             onSelect={handleSelect}
             onChange={handleChange}
