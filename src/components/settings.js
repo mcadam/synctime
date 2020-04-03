@@ -34,6 +34,16 @@ export default ({ config, setConfig }) => {
     setConfig(cloneDeep(config))
   }
 
+  const handleOrderTz = (checked) => {
+    config.orderTz = checked
+    setConfig(cloneDeep(config))
+  }
+
+  const handleShowOffset = (checked) => {
+    config.showOffset = checked
+    setConfig(cloneDeep(config))
+  }
+
   const handleDisableWorkingHours = (checked) => {
     config.disableWorkingHours = checked
     setConfig(cloneDeep(config))
@@ -56,6 +66,18 @@ export default ({ config, setConfig }) => {
       title: "Only Display Clocks",
       actions: [
         <Switch defaultChecked={config.onlyClocks} onChange={handleOnlyClocks}/>
+      ]
+    },
+    {
+      title: "Order by Timezone ",
+      actions: [
+        <Switch defaultChecked={config.orderTz} onChange={handleOrderTz}/>
+      ]
+    },
+    {
+      title: "Show Timezone Offset",
+      actions: [
+        <Switch defaultChecked={config.showOffset} onChange={handleShowOffset}/>
       ]
     },
     {

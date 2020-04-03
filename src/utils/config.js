@@ -7,6 +7,8 @@ export const getDefaultConfig = () => ({
     end: 17,
     after: 21,
   },
+  orderTz: false,
+  showOffset: false,
   disableWorkingHours: false,
   onlyClocks: false,
 })

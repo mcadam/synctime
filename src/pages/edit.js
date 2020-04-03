@@ -1,10 +1,13 @@
 import React, { useState } from "react"
-import { Row, Col, Input, AutoComplete } from "antd"
+import { Typography, Button, List, Row, Col, Input, AutoComplete } from "antd"
 import createPersistedState from "use-persisted-state"
 import { searchCities, boldSubString } from "../utils/search"
 import Layout from "../components/layout"
-import { ArrowLeftOutlined } from "@ant-design/icons"
+import { HomeOutlined, DeleteOutlined, ArrowLeftOutlined } from "@ant-design/icons"
 const { Search } = Input
+const { Item } = List
+const { Text } = Typography;
+
 const useCitiesState = createPersistedState("cities")
 
 export default () => {
@@ -41,7 +44,17 @@ export default () => {
     setValue(data)
   }
 
-  const cityList = cities.map(city => <h2 key={city.id}>{city.name}</h2>)
+  const makeHome = city => {
+    for (var c of cities) {
+      c.home = false
+    }
+    city.home = true
+    setCities([...cities])
+  }
+
+  const deleteCity = city => {
+    setCities([...cities.filter(c => c.id !== city.id)])
+  }
 
   const header = <ArrowLeftOutlined onClick={() => window.history.back()} />
 
@@ -61,7 +74,24 @@ export default () => {
           </AutoComplete>
         </Col>
       </Row>
-      {cityList}
+      <Row justify="center">
+        <Col>
+          <List
+            style={{ width: 500 }}
+            dataSource={cities}
+            renderItem={city => (
+              <Item actions={[
+                <Button type="primary" icon={<HomeOutlined />} onClick={() => makeHome(city)}>Make Home</Button>,
+                <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => deleteCity(city)}>Delete</Button>
+              ]}
+              >
+                <Text strong>{city.name} - {city.country}</Text>
+              </Item>
+            )}
+          />
+        </Col>
+      </Row>
+
     </Layout>
   )
 }

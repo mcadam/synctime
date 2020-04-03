@@ -3,10 +3,11 @@ import "moment-timezone"
 import moment from "moment"
 import createPersistedState from "use-persisted-state"
 import { useWindowSize } from '@react-hook/window-size'
+import { sortBy } from 'lodash';
 
-import { Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
+import { Tag, Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
 import { Link } from "gatsby"
-import { SettingOutlined, MenuOutlined } from "@ant-design/icons"
+import { EnvironmentOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons"
 
 import Layout from "../components/layout"
 import Clock from "../components/clock"
@@ -14,8 +15,9 @@ import Hour from "../components/hour"
 import Settings from "../components/settings"
 
 import { getDefaultConfig } from "../utils/config"
+import { getOffset, getUTCOffset } from "../utils/datetime"
 
-const { Title } = Typography
+const { Title, Text } = Typography
 const useCitiesState = createPersistedState("cities")
 const useConfigState = createPersistedState("config")
 
@@ -26,7 +28,7 @@ export default () => {
   const [visible, setVisible] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment())
 
-  if (!cities.length) {
+  if (cities.length === 0) {
     return (
       <Layout>
         <Result
@@ -54,7 +56,7 @@ export default () => {
       block: "start",
       inline: "center",
     })
-  }, [ width, height ])
+  }, [ width, height ]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -63,7 +65,12 @@ export default () => {
     return () => clearInterval(intervalId)
   })
 
-  const cityList = cities.map((city, index) => {
+  let orderedCities = cities
+  if (config.orderTz) {
+    orderedCities = sortBy(cities, city => moment(currentTime).tz(city.tz).utcOffset())
+  }
+
+  const cityList = orderedCities.map((city, index) => {
     const current = moment(currentTime).tz(city.tz)
     const currentHour = current.hour()
     const hours = []
@@ -94,6 +101,23 @@ export default () => {
       }
     }
     const currentRef = index === 0 ? ref : null;
+    const home = cities.filter(c => c.home)
+    let offset = getUTCOffset(current)
+    if (home.length) {
+      offset = getOffset(city.tz, home[0].tz)
+    }
+
+    const cityTitle = (
+      <Title level={3} style={{ margin: "0 10px 0.5em 10px" }}>
+        {city.home &&
+        <EnvironmentOutlined style={{ fontSize: 16, marginRight: 6, verticalAlign: 0 }}/>
+        }
+        {city.name}
+        {config.showOffset && !city.home &&
+          <Tag style={{ marginLeft: 8, verticalAlign: "text-bottom" }}>{offset}</Tag>
+        }
+      </Title>
+    )
 
     return (
       <div
@@ -105,8 +129,9 @@ export default () => {
           marginTop: 10,
         }}
       >
-        <Title level={4}>{city.name}</Title>
-        <div ref={currentRef} style={{ display: "flex", alignItems: "center" }}>
+        {cityTitle}
+        <div ref={currentRef} style={{ display: "flex", alignItems: "center",
+          justifyContent: "center" }}>
           {hours}
         </div>
       </div>
@@ -116,7 +141,7 @@ export default () => {
   const header = (
     <Row>
       <Col span={12}>
-        <Link to="edit" style={{ color: "inherit" }}>
+        <Link to="/edit" style={{ color: "inherit" }}>
           <MenuOutlined />
         </Link>
       </Col>
