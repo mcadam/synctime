@@ -32,35 +32,16 @@ export default () => {
   const [visible, setVisible] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment())
 
-  if (cities.length === 0) {
-    return (
-      <Layout key="no-cities">
-        <Result
-          key="result-no-cities"
-          icon={
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="No cities"
-            />
-          }
-          extra={
-            <Link to="/edit">
-              <Button type="primary">Create Now</Button>
-            </Link>
-          }
-        />
-      </Layout>
-    )
-  }
-
   const ref = React.createRef()
 
   useEffect(() => {
-    ref.current.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "center",
-    })
+    if (ref.current) {
+      ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "center",
+      })
+    }
   }, [width, height]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -171,8 +152,26 @@ export default () => {
   )
 
   return (
-    <Layout key="available-cities" header={header}>
-      {cityList}
+    <Layout header={header}>
+
+      {cityList.length
+        ? cityList
+        : (
+          <Result
+            icon={
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description="No cities"
+              />
+            }
+            extra={
+              <Link to="/edit">
+                <Button type="primary">Create Now</Button>
+              </Link>
+            }
+          />
+        )
+      }
       <Drawer
         title="Settings"
         placement="right"
