@@ -1,6 +1,6 @@
 export const getDefaultConfig = () => ({
   format24Hours: false,
-  seconds: true,
+  seconds: false,
   workingHours: {
     before: 6,
     start: 9,
