@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react"
 import "moment-timezone"
 import moment from "moment"
-import { Badge, Typography, Row, Col, Button, Result, Empty } from "antd"
-import { Link } from "gatsby"
 import createPersistedState from "use-persisted-state"
+
+import { Typography, Row, Col, Button, Result, Empty } from "antd"
+import { Link } from "gatsby"
 import { SettingOutlined, MenuOutlined } from "@ant-design/icons"
+
 import Layout from "../components/layout"
-import { getColorForHour } from "../utils/datetime"
-const useCitiesState = createPersistedState("cities")
+import Clock from "../components/clock"
+import Hour from "../components/hour"
+
+import { getDefaultConfig } from "../utils/config"
+
 const { Title } = Typography
+const useCitiesState = createPersistedState("cities")
+const useConfigState = createPersistedState("config")
 
 export default () => {
   const [cities] = useCitiesState([])
+  const [config] = useConfigState(getDefaultConfig())
   const [collapsed, setCollapsed] = useState(true)
+  const [currentTime, setCurrentTime] = useState(moment())
 
   if (!cities.length) {
     return (
@@ -43,40 +52,23 @@ export default () => {
     });
   })
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(moment())
+    }, 1000)
+    return () => clearInterval(intervalId)
+  })
+
   const cityList = cities.map(city => {
-    const current = moment.tz(city.tz)
+    const current = moment(currentTime).tz(city.tz)
     const currentHour = current.hour()
-    const hoursBefore = []
-    for (var i = currentHour - 11; i <= currentHour; i++) {
+    const hours= []
+    for (var i = currentHour - 11; i <= currentHour + 12; i++) {
       const hour = moment.tz(city.tz).hour(i)
-      let count = hour.format("HH")
-      hoursBefore.push(
-        <Badge
-          key={i}
-          count={count}
-          style={{
-            marginBottom: 18,
-            marginRight: 5,
-            backgroundColor: getColorForHour(hour),
-          }}
-        />
-      )
-    }
-    const hoursAfter = []
-    for (i = currentHour + 1; i <= currentHour + 12; i++) {
-      const hour = moment.tz(city.tz).hour(i)
-      let count = hour.format("HH")
-      hoursAfter.push(
-        <Badge
-          key={i}
-          count={count}
-          style={{
-            marginBottom: 18,
-            marginRight: 5,
-            backgroundColor: getColorForHour(hour),
-          }}
-        />
-      )
+      hours.push(<Hour key={i} time={hour} format24Hours={config.format24Hours}/>)
+      if (i === currentHour) {
+        hours.push(<Clock key={city.id} time={current} seconds={config.seconds} format24Hours={config.format24Hours}/>)
+      }
     }
 
     return (
@@ -88,27 +80,9 @@ export default () => {
           display: "inline-block",
         }}
       >
-        <Title
-          level={4}
-          style={{ position: "fixed", margin: "auto", left: 0, right: 0 }}
-        >
-          {city.name}
-        </Title>
-        <div style={{ marginTop: 25 }}>
-          {hoursBefore}
-          <span ref={ref}>
-          <Title
-            level={1}
-            style={{
-              margin: "5px 15px",
-              color: getColorForHour(current),
-              display: "inline-block",
-            }}
-          >
-            {current.format("HH:mm")}
-          </Title>
-          </span>
-          {hoursAfter}
+        <Title level={4}>{city.name}</Title>
+        <div ref={ref} style={{ display: "flex", alignItems: "center" }}>
+          {hours}
         </div>
       </div>
     )
