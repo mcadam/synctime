@@ -136,7 +136,7 @@ export default () => {
           whiteSpace: "nowrap",
           textAlign: "center",
           display: "inline-block",
-          marginTop: 10,
+          marginBottom: 10,
         }}
       >
         {cityTitle}
