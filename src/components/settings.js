@@ -96,10 +96,7 @@ export default ({ config, setConfig }) => {
     {
       title: "Make Clock Bigger",
       actions: [
-        <Switch
-          defaultChecked={config.large}
-          onChange={handleLarge}
-        />,
+        <Switch defaultChecked={config.large} onChange={handleLarge} />,
       ],
     },
     {

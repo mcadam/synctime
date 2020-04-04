@@ -36,10 +36,7 @@ export default () => {
     return (
       <Result
         icon={
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="No cities"
-          />
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No cities" />
         }
         extra={
           <Link to="/edit">
