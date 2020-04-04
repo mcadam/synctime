@@ -81,7 +81,6 @@ export default () => {
       <Row justify="center">
         <Col>
           <List
-            style={{ width: 500 }}
             dataSource={cities}
             renderItem={city => (
               <Item
