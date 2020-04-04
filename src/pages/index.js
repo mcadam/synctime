@@ -102,6 +102,7 @@ export default () => {
             format24Hours={config.format24Hours}
             workingHours={config.workingHours}
             disableWorkingHours={config.disableWorkingHours}
+            large={config.large}
           />
         )
       }
@@ -112,9 +113,10 @@ export default () => {
     if (home.length) {
       offset = getOffset(city.tz, home[0].tz)
     }
+    const titleLevel = config.large ? 1 : 3
 
     const cityTitle = (
-      <Title level={3} style={{ margin: "0 10px 0.5em 10px" }}>
+      <Title level={titleLevel} style={{ margin: "0 10px 0.5em 10px" }}>
         {city.home && (
           <EnvironmentOutlined
             style={{ fontSize: 16, marginRight: 6, verticalAlign: 0 }}

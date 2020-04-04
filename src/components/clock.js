@@ -7,6 +7,7 @@ export default ({
   seconds,
   workingHours,
   disableWorkingHours,
+  large,
 }) => {
   const hours = format24Hours ? time.format("HH") : time.format("hh")
   const minutes = time.format("mm")
@@ -15,6 +16,7 @@ export default ({
   const color = disableWorkingHours
     ? "rgba(0,0,0,.85)"
     : getColorForHour(time, workingHours)
+  const fontSize = large ? "5em" : "3.5em"
   const digit = (digit, digitAM) => (
     <span
       style={{
@@ -25,7 +27,7 @@ export default ({
         padding: "6px 4px",
         borderRadius: 3,
         color: "white",
-        fontSize: "3.5em",
+        fontSize: fontSize,
         backgroundColor: color,
       }}
     >

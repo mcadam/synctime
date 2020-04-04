@@ -43,6 +43,11 @@ export default ({ config, setConfig }) => {
     setConfig(cloneDeep(config))
   }
 
+  const handleLarge = checked => {
+    config.large = checked
+    setConfig(cloneDeep(config))
+  }
+
   const handleDisableWorkingHours = checked => {
     config.disableWorkingHours = checked
     setConfig(cloneDeep(config))
@@ -85,6 +90,15 @@ export default ({ config, setConfig }) => {
         <Switch
           defaultChecked={config.showOffset}
           onChange={handleShowOffset}
+        />,
+      ],
+    },
+    {
+      title: "Make Clock Bigger",
+      actions: [
+        <Switch
+          defaultChecked={config.large}
+          onChange={handleLarge}
         />,
       ],
     },
