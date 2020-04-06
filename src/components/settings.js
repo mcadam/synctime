@@ -33,6 +33,11 @@ export default ({ config, setConfig }) => {
     setConfig(cloneDeep(config))
   }
 
+  const handleDarkMode = checked => {
+    config.darkMode = checked
+    setConfig(cloneDeep(config))
+  }
+
   const handleOrderTz = checked => {
     config.orderTz = checked
     setConfig(cloneDeep(config))
@@ -54,6 +59,15 @@ export default ({ config, setConfig }) => {
   }
 
   const items = [
+    {
+      title: "Dark Mode",
+      actions: [
+        <Switch
+          defaultChecked={config.darkMode}
+          onChange={handleDarkMode}
+        />,
+      ],
+    },
     {
       title: "Use 24 Hours",
       actions: [

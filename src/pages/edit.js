@@ -3,8 +3,9 @@ import { Typography, Button, List, Row, Col, Input, AutoComplete } from "antd"
 import createPersistedState from "use-persisted-state"
 import { searchCities, boldSubString } from "../utils/search"
 import Layout from "../components/layout"
+import { Link } from "gatsby"
 import {
-  HomeOutlined,
+  EnvironmentOutlined,
   DeleteOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons"
@@ -60,7 +61,12 @@ export default () => {
     setCities([...cities.filter(c => c.id !== city.id)])
   }
 
-  const header = <ArrowLeftOutlined onClick={() => window.history.back()} />
+  const header = (
+    <Link to="/">
+      <ArrowLeftOutlined style={{ marginRight: 10 }} />
+      Back Home
+    </Link>
+  )
 
   return (
     <Layout header={header}>
@@ -86,14 +92,12 @@ export default () => {
               <Item
                 actions={[
                   <Button
-                    type="primary"
-                    icon={<HomeOutlined />}
+                    icon={<EnvironmentOutlined />}
                     onClick={() => makeHome(city)}
                   >
-                    Make Home
+                    Display as Home City
                   </Button>,
                   <Button
-                    type="primary"
                     danger
                     icon={<DeleteOutlined />}
                     onClick={() => deleteCity(city)}
@@ -107,6 +111,12 @@ export default () => {
                 </Text>
               </Item>
             )}
+            footer={
+              <Link to="/">
+                <Button style={{ marginRight: 8 }}>Cancel</Button>
+                <Button type="primary">OK</Button>
+              </Link>
+            }
           />
         </Col>
       </Row>

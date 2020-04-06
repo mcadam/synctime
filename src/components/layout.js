@@ -5,13 +5,13 @@ const { Header, Content } = Layout
 const { Title } = Typography
 
 export default ({ header, children }) => (
-  <Layout style={{ minHeight: "100vh", backgroundColor: "white" }}>
+  <Layout style={{ minHeight: "100vh", backgroundColor: "inherit" }}>
     <Helmet>
       <meta charSet="utf-8" />
       <title>SyncTime</title>
       <link rel="canonical" href="https://synctime.in" />
     </Helmet>
-    <Header style={{ backgroundColor: "white" }}>
+    <Header style={{ backgroundColor: "inherit" }}>
       <Title level={4} style={{ lineHeight: "inherit" }}>
         {header}
       </Title>

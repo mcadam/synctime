@@ -12,4 +12,5 @@ export const getDefaultConfig = () => ({
   disableWorkingHours: false,
   onlyClocks: false,
   large: false,
+  darkMode: false,
 })

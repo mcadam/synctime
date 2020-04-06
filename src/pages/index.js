@@ -5,6 +5,7 @@ import createPersistedState from "use-persisted-state"
 import { useWindowSize } from "@react-hook/window-size"
 import { sortBy } from "lodash"
 
+import themeSwitcher from 'theme-switcher';
 import { Tag, Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
 import { Link } from "gatsby"
 import {
@@ -24,6 +25,15 @@ import { getOffset, getUTCOffset } from "../utils/datetime"
 const { Title } = Typography
 const useCitiesState = createPersistedState("cities")
 const useConfigState = createPersistedState("config")
+
+const { switcher, getTheme } = themeSwitcher({
+  themeMap: {
+    default: '/antd.min.css',
+    dark: '/antd.dark.min.css',
+  }
+});
+
+switcher({ theme: getTheme() });
 
 export default () => {
   const [width, height] = useWindowSize()
@@ -56,6 +66,13 @@ export default () => {
       inline: "center",
     })
   }, [width, height]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const theme = config.darkMode ? 'dark' : 'default'
+    if (getTheme() !== theme) {
+      switcher({ theme })
+    }
+  }, [config.darkMode]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const intervalId = setInterval(() => {
