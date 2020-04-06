@@ -62,10 +62,7 @@ export default ({ config, setConfig }) => {
     {
       title: "Dark Mode",
       actions: [
-        <Switch
-          defaultChecked={config.darkMode}
-          onChange={handleDarkMode}
-        />,
+        <Switch defaultChecked={config.darkMode} onChange={handleDarkMode} />,
       ],
     },
     {

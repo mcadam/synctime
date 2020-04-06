@@ -4,9 +4,9 @@ import moment from "moment"
 import createPersistedState from "use-persisted-state"
 import { useWindowSize } from "@react-hook/window-size"
 import { sortBy } from "lodash"
+import themeSwitcher from "theme-switcher"
 
-import themeSwitcher from 'theme-switcher';
-import { Tag, Drawer, Typography, Row, Col, Button, Result, Empty } from "antd"
+import { Tag, Drawer, Typography, Row, Col, Button, Result } from "antd"
 import { Link } from "gatsby"
 import {
   EnvironmentOutlined,
@@ -28,12 +28,10 @@ const useConfigState = createPersistedState("config")
 
 const { switcher, getTheme } = themeSwitcher({
   themeMap: {
-    default: '/antd.min.css',
-    dark: '/antd.dark.min.css',
-  }
-});
-
-switcher({ theme: getTheme() });
+    default: "/antd.min.css",
+    dark: "/antd.dark.min.css",
+  },
+})
 
 export default () => {
   const [width, height] = useWindowSize()
@@ -42,12 +40,22 @@ export default () => {
   const [visible, setVisible] = useState(false)
   const [currentTime, setCurrentTime] = useState(moment())
 
+
   if (cities.length === 0) {
+
+    useEffect(() => {
+      const dom = document.getElementById("theme-style")
+      const theme = config.darkMode ? "dark" : "default"
+      if (theme !== getTheme() || !dom) {
+        switcher({ theme: theme })
+      }
+    }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
     return (
       <Result
-        icon={
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No cities" />
-        }
+        status="404"
+        title="No Cities!"
+        subTitle="Create new cities to get clocks and time lines."
         extra={
           <Link to="/edit">
             <Button type="primary">Create Now</Button>
@@ -66,13 +74,6 @@ export default () => {
       inline: "center",
     })
   }, [width, height]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    const theme = config.darkMode ? 'dark' : 'default'
-    if (getTheme() !== theme) {
-      switcher({ theme })
-    }
-  }, [config.darkMode]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const intervalId = setInterval(() => {
