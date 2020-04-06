@@ -118,6 +118,7 @@ export default () => {
             workingHours={config.workingHours}
             disableWorkingHours={config.disableWorkingHours}
             large={config.large}
+            darkMode={config.darkMode}
           />
         )
       }

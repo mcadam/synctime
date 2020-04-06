@@ -3,6 +3,7 @@ import { getColorForHour } from "../utils/datetime"
 
 export default ({
   time,
+  darkMode,
   format24Hours,
   seconds,
   workingHours,
@@ -14,7 +15,7 @@ export default ({
   const secs = time.format("ss")
   const ampm = time.format("A")
   const color = disableWorkingHours
-    ? "rgba(0,0,0,.85)"
+    ? (darkMode ? "rgba(255,255,255,.85)": "rgba(0,0,0,.85)")
     : getColorForHour(time, workingHours)
   const fontSize = large ? "5em" : "3.5em"
   const digit = (digit, digitAM) => (
@@ -26,7 +27,7 @@ export default ({
         margin: 4,
         padding: "6px 4px",
         borderRadius: 3,
-        color: "white",
+        color: darkMode ? "black": "white",
         fontSize: fontSize,
         backgroundColor: color,
       }}
