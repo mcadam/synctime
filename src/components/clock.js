@@ -17,6 +17,9 @@ export default ({
   const color = disableWorkingHours
     ? (darkMode ? "rgba(255,255,255,.85)": "rgba(0,0,0,.85)")
     : getColorForHour(time, workingHours)
+  const fontColor = disableWorkingHours
+    ? (darkMode ? "black" : "white")
+    : "white"
   const fontSize = large ? "5em" : "3.5em"
   const digit = (digit, digitAM) => (
     <span
@@ -27,7 +30,7 @@ export default ({
         margin: 4,
         padding: "6px 4px",
         borderRadius: 3,
-        color: darkMode ? "black": "white",
+        color: fontColor,
         fontSize: fontSize,
         backgroundColor: color,
       }}
