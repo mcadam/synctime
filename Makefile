@@ -23,4 +23,4 @@ logs:
 	@docker logs -f synctime
 
 shell:
-	@docker exec -it synctime bash
+	@docker run -it --rm -v $(PWD):/app -v /app/node_modules -e GATSBY_TELEMETRY_DISABLED=1 synctime bash
