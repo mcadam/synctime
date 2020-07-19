@@ -19,7 +19,7 @@
     "gatsby": "^2.20.28",
     "gatsby-plugin-antd": "^2.2.0",
     "gatsby-plugin-react-helmet": "^3.2.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "react": "^16.13.1",
